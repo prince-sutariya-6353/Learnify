@@ -17,11 +17,25 @@ mongoose.connect(MONGODB_URI)
 const corsOptions = {
   origin: ['http://localhost:5173', 'https://learnify-client.vercel.app', 'https://learnify-bg8a.vercel.app'],
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token', 'X-Requested-With', 'Accept', 'Accept-Version', 'Content-Length', 'Content-MD5', 'Date', 'X-Api-Version']
 };
+
+// Handle OPTIONS preflight requests
+app.options('*', cors(corsOptions));
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// Add CORS headers manually to all responses
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://learnify-bg8a.vercel.app');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,PATCH,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization');
+  next();
+});
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -32,6 +46,11 @@ app.use('/api/auth', authRoutes);
 // Example route
 app.get("/api/message", (req, res) => {
   res.json({ message: "Hello from the backend!" });
+});
+
+// Handle 404 - Keep this as the last route
+app.use((req, res) => {
+  res.status(404).json({ message: 'Route not found' });
 });
 
 app.listen(PORT, () => {
