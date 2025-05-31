@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import apiConfig from '../config/api';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -36,7 +37,7 @@ const Signup = () => {
       // Remove confirmPassword from data sent to server
       const { confirmPassword, ...dataToSend } = formData;
       
-      const response = await axios.post('http://localhost:5000/api/auth/signup', dataToSend);
+      const response = await axios.post(apiConfig.auth.signup, dataToSend);
       
       // Redirect to login page after successful signup
       navigate('/login', { state: { message: 'Account created successfully! Please log in.' } });

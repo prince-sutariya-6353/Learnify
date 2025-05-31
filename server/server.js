@@ -13,7 +13,14 @@ mongoose.connect(MONGODB_URI)
   .then(() => console.log('MongoDB connected successfully'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-app.use(cors());
+// CORS configuration
+const corsOptions = {
+  origin: ['http://localhost:5173', 'https://learnify-client.vercel.app', 'https://learnify-bg8a.vercel.app'],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Import routes
