@@ -7,9 +7,9 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // MongoDB Connection
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://princegithub6353:<db_password>@learnify.znqp392.mongodb.net/?retryWrites=true&w=majority&appName=Learnify";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://princegithub6353:kO831leVmWEy573n@learnify.umsrqrf.mongodb.net/?retryWrites=true&w=majority&appName=Learnify";
 
-mongoose.connect(MONGODB_URI.replace('<db_password>', process.env.DB_PASSWORD))
+mongoose.connect(MONGODB_URI)
   .then(() => console.log('MongoDB connected successfully'))
   .catch(err => console.error('MongoDB connection error:', err));
 
