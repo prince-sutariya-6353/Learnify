@@ -1,10 +1,16 @@
 {
   "version": 2,
+  "buildCommand": "cd client && npm install && npm run build",
+  "outputDirectory": "client/dist",
+  "installCommand": "npm install",
   "builds": [
     {
       "src": "client/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
+      "config": { 
+        "distDir": "dist",
+        "buildCommand": "npm run build"
+      }
     },
     {
       "src": "server/index.js",
@@ -17,22 +23,30 @@
       "dest": "server/index.js"
     },
     {
-      "src": "/(.*\\.js)",
+      "src": "/(assets/.*)",
+      "headers": { "cache-control": "public, max-age=31536000, immutable" },
+      "dest": "/client/dist/$1"
+    },
+    {
+      "src": "/(.+\\.js)",
       "headers": { "Content-Type": "application/javascript" },
-      "dest": "client/dist/$1"
+      "dest": "/client/dist/$1"
     },
     {
-      "src": "/(.*\\.css)",
+      "src": "/(.+\\.css)",
       "headers": { "Content-Type": "text/css" },
-      "dest": "client/dist/$1"
+      "dest": "/client/dist/$1"
     },
     {
-      "src": "/(.*\\.(png|jpg|jpeg|gif|ico|svg|webp))",
-      "dest": "client/dist/$1"
+      "src": "/(.+\\.(png|jpg|jpeg|gif|ico|svg|webp))",
+      "dest": "/client/dist/$1"
+    },
+    {
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "client/dist/index.html"
+      "dest": "/client/dist/index.html"
     }
   ]
 } 

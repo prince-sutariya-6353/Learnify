@@ -7,7 +7,11 @@ const authRoutes = require('./routes/auth');
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
 // ✅ MongoDB connection
@@ -20,6 +24,11 @@ app.use('/api/auth', authRoutes);
 
 app.get('/api/message', (req, res) => {
   res.json({ message: 'Hello from the backend!' });
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.status(200).send('OK');
 });
 
 // For Vercel serverless functions
