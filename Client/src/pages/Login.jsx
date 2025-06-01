@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import axios from "axios";
+import api from "../api/axios";
 
 function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -12,7 +12,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", form);
+      const res = await api.post("/auth/login", form);
       alert(`Welcome ${res.data.user.name}`);
     } catch (err) {
       alert(err.response?.data?.msg || "Login failed");
