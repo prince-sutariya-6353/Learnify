@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "framework": null,
   "buildCommand": "cd client && npm install && npm run build",
   "outputDirectory": "client/dist",
   "installCommand": "npm install",
@@ -8,8 +9,7 @@
       "src": "client/package.json",
       "use": "@vercel/static-build",
       "config": { 
-        "distDir": "dist",
-        "buildCommand": "npm run build"
+        "distDir": "dist"
       }
     },
     {
@@ -20,12 +20,11 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "server/index.js"
+      "dest": "/server/index.js"
     },
     {
-      "src": "/(assets/.*)",
-      "headers": { "cache-control": "public, max-age=31536000, immutable" },
-      "dest": "/client/dist/$1"
+      "src": "/assets/(.*)",
+      "dest": "/client/dist/assets/$1"
     },
     {
       "src": "/(.+\\.js)",

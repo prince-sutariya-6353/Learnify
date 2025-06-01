@@ -8,8 +8,13 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-  origin: '*',
+  origin: process.env.NODE_ENV === 'production' ? [
+    'https://learnify.vercel.app',
+    'https://learnify-git-main.vercel.app',
+    /\.vercel\.app$/
+  ] : '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
@@ -31,7 +36,7 @@ app.get('/api/health', (req, res) => {
   res.status(200).send('OK');
 });
 
-// For Vercel serverless functions
+// For local development
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
