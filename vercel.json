@@ -2,14 +2,14 @@
   "version": 2,
   "framework": null,
   "buildCommand": "cd client && npm install && npm run build",
-  "outputDirectory": "client/dist",
+  "outputDirectory": "client/src",
   "installCommand": "npm install",
   "builds": [
     {
       "src": "client/package.json",
       "use": "@vercel/static-build",
       "config": { 
-        "distDir": "dist"
+      "distDir": "src"
       }
     },
     {
@@ -24,28 +24,28 @@
     },
     {
       "src": "/assets/(.*)",
-      "dest": "/client/dist/assets/$1"
+      "dest": "/client/src/assets/$1"
     },
     {
       "src": "/(.+\\.js)",
       "headers": { "Content-Type": "application/javascript" },
-      "dest": "/client/dist/$1"
+      "dest": "/client/src/$1"
     },
     {
       "src": "/(.+\\.css)",
       "headers": { "Content-Type": "text/css" },
-      "dest": "/client/dist/$1"
+      "dest": "/client/src/index.html"
     },
     {
       "src": "/(.+\\.(png|jpg|jpeg|gif|ico|svg|webp))",
-      "dest": "/client/dist/$1"
+      "dest": "/client/src/$1"
     },
     {
       "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "/client/dist/index.html"
+      "dest": "/client/src/index.html"
     }
   ]
 } 
