@@ -12,9 +12,11 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // const res = await api.post(process.env.REACT_APP_LOGIN_ENDPOINT, form);
       const res = await api.post("/auth/login", form);
       alert(`Welcome ${res.data.user.name}`);
     } catch (err) {
+      // alert(err.response?.data?.msg || process.env.REACT_APP_LOGIN_ERROR_MESSAGE || "Login failed");
       alert(err.response?.data?.msg || "Login failed");
     }
   };

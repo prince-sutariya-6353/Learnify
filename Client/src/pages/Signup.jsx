@@ -12,6 +12,7 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // const res = await api.post(`${process.env.REACT_APP_SIGNUP_ENDPOINT}/auth/signup`, form);
       const res = await api.post("/auth/signup", form);
       alert("Signup successful!");
     } catch (err) {
